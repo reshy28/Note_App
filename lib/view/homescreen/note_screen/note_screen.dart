@@ -1,12 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:note_app/controller/note_screen_controller.dart';
 import 'package:note_app/utlis/color_constants.dart';
 import 'package:note_app/view/homescreen/widget/custom_note_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  Notescreenontroller notescreenontrollerobj = Notescreenontroller();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,11 +29,22 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: ListView.separated(
-          itemBuilder: (context, index) => notes_widget(),
+          itemBuilder: (context, index) => notes_widget(
+                ondeletebutton: () {
+                  notescreenontrollerobj.deletedata(index);
+                  setState(() {});
+                },
+                titile:
+                    notescreenontrollerobj.notelist[index]["titile"].toString(),
+                description:
+                    notescreenontrollerobj.notelist[index]["des"].toString(),
+                date: notescreenontrollerobj.notelist[index]["date"].toString(),
+                noteclr: notescreenontrollerobj.notelist[index]["Colors"],
+              ),
           separatorBuilder: (context, index) => SizedBox(
                 height: 10,
               ),
-          itemCount: 10),
+          itemCount: notescreenontrollerobj.notelist.length),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
@@ -116,14 +134,28 @@ class HomeScreen extends StatelessWidget {
                           width: 30,
                         ),
                         Expanded(
-                          child: Container(
-                            child: Center(child: Text("Save")),
-                            decoration: BoxDecoration(
-                              color: Colorsconstant.mywhite,
-                              borderRadius: BorderRadius.circular(8),
+                          child: InkWell(
+                            onTap: () {
+                              notescreenontrollerobj.notelist.add(
+                                {
+                                  "titile": "reshy",
+                                  "des": "endhoke und mwone vishesham",
+                                  "date": "20/10/2024",
+                                  "Colors": Colors.purple,
+                                },
+                              );
+                              setState(() {});
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              child: Center(child: Text("Save")),
+                              decoration: BoxDecoration(
+                                color: Colorsconstant.mywhite,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              height: 40,
+                              width: 90,
                             ),
-                            height: 40,
-                            width: 90,
                           ),
                         ),
                       ],

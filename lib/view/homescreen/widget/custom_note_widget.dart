@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/utlis/color_constants.dart';
 
-class notes_widget extends StatelessWidget {
+class notes_widget extends StatefulWidget {
   const notes_widget({
     super.key,
+    required this.titile,
+    required this.description,
+    required this.date,
+    required this.noteclr,
+    this.ondeletebutton,
   });
+  final String titile;
+  final String description;
+  final String date;
+  final Color noteclr;
+  final VoidCallback? ondeletebutton;
 
+  @override
+  State<notes_widget> createState() => _notes_widgetState();
+}
+
+class _notes_widgetState extends State<notes_widget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -13,7 +28,7 @@ class notes_widget extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colorsconstant.mynoteclr,
+          color: widget.noteclr,
         ),
         width: 330,
         child: Column(
@@ -24,7 +39,7 @@ class notes_widget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "TITLE",
+                    widget.titile,
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   Row(
@@ -33,28 +48,33 @@ class notes_widget extends StatelessWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      Icon(Icons.delete),
+                      IconButton(
+                        onPressed: widget.ondeletebutton,
+                        icon: Icon(
+                          Icons.delete,
+                          color: Colorsconstant.myblack,
+                        ),
+                      )
                     ],
                   ),
                 ],
               ),
             ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 7,
-                ),
-                Text(
-                  "DESCRIPTION",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
+            SizedBox(
+              width: 7,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                widget.description,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  "Tue,Feb 20,2024",
+                  widget.date,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
