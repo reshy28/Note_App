@@ -32,6 +32,7 @@ class _notes_widgetState extends State<notes_widget> {
         ),
         width: 330,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),

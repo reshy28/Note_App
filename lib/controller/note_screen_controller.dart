@@ -30,19 +30,27 @@ class Notescreenontroller {
   ];
 
   ///FUNCTION TO ADD DATA
-  void adddata() {
+  void adddata({required titilecn, required descn, required datecn}) {
     notelist.add(
       {
-        "titile": "reshy",
-        "des": "endhoke und mwone vishesham",
-        "date": "20/10/2024",
+        "titile": titilecn,
+        "des": descn,
+        "date": datecn,
         "Colors": Colors.white,
       },
     );
   }
 
   ///FUNCTION TO DELETE THE DATA
+
   void deletedata(int index) {
     notelist.removeAt(index);
   }
+
+  // function to clear the controller datas
+
+  void clearcontroller() {}
+
+  ////FUNCTION TO EDIT DATA
+  ////FUNCTION TO SHARE DATA
 }
