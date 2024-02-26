@@ -1,33 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:note_app/utlis/color_constants.dart';
 
 class Notescreenontroller {
-  List notelist = [
-    {
-      "titile": "reshy",
-      "des": "endhoke und mwone vishesham",
-      "date": "20/10/2024",
-      "Colors": Colors.white,
-    },
-    {
-      "titile": "reshy",
-      "des":
-          "when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently",
-      "date": "20/10/2024",
-      "Colors": Colors.white,
-    },
-    {
-      "titile": "reshy",
-      "des": "endhoke und mwone vishesham",
-      "date": "20/10/2024",
-      "Colors": Colors.white,
-    },
-    {
-      "titile": "reshy",
-      "des": "endhoke und mwone vishesham",
-      "date": "20/10/2024",
-      "Colors": Colors.white,
-    },
-  ];
+  List notelist = [];
 
   ///FUNCTION TO ADD DATA
   void adddata({required titilecn, required descn, required datecn}) {
@@ -36,7 +11,7 @@ class Notescreenontroller {
         "titile": titilecn,
         "des": descn,
         "date": datecn,
-        "Colors": Colors.white,
+        "Colors": selectedcolor,
       },
     );
   }
@@ -47,9 +22,10 @@ class Notescreenontroller {
     notelist.removeAt(index);
   }
 
-  // function to clear the controller datas
-
-  void clearcontroller() {}
+  static Color selectedcolor = Colors.white;
+  void onclrselection(Color newclr) {
+    selectedcolor = newclr;
+  }
 
   ////FUNCTION TO EDIT DATA
   ////FUNCTION TO SHARE DATA

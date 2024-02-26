@@ -9,12 +9,16 @@ class notes_widget extends StatefulWidget {
     required this.date,
     required this.noteclr,
     this.ondeletebutton,
+    this.ondeditbutton,
+    this.onsavepressed,
   });
   final String titile;
   final String description;
   final String date;
   final Color noteclr;
   final VoidCallback? ondeletebutton;
+  final VoidCallback? ondeditbutton;
+  final VoidCallback? onsavepressed;
 
   @override
   State<notes_widget> createState() => _notes_widgetState();
@@ -45,9 +49,15 @@ class _notes_widgetState extends State<notes_widget> {
                   ),
                   Row(
                     children: [
-                      Icon(Icons.edit),
+                      IconButton(
+                        onPressed: widget.ondeditbutton,
+                        icon: Icon(
+                          Icons.edit,
+                          color: Colorsconstant.myblack,
+                        ),
+                      ),
                       SizedBox(
-                        width: 10,
+                        width: 0,
                       ),
                       IconButton(
                         onPressed: widget.ondeletebutton,
