@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:note_app/controller/note_screen_controller.dart';
 import 'package:note_app/utlis/color_constants.dart';
 import 'package:note_app/view/homescreen/widget/custom_note_widget.dart';
@@ -73,6 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           notescreenontrollerobj.notelist[index]["des"];
                       datecontroller.text =
                           notescreenontrollerobj.notelist[index]["date"];
+
                       showModalBottomSheet(
                         isScrollControlled: true,
                         context: context,
@@ -229,15 +231,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                               onTap: () {
                                                 if (_formKey.currentState!
                                                     .validate()) {
-                                                  notescreenontrollerobj
-                                                      .adddata(
-                                                          titilecn:
-                                                              titilecontroller
-                                                                  .text,
-                                                          datecn: datecontroller
-                                                              .text,
-                                                          descn: descontroller
-                                                              .text);
+                                                  // notescreenontrollerobj
+                                                  //     .adddata(
+                                                  //         titilecn:
+                                                  //             titilecontroller
+                                                  //                 .text,
+                                                  //         datecn: datecontroller
+                                                  //             .text,
+                                                  //         descn: descontroller
+                                                  //             .text);
+
+                                                  editedata(index);
+
                                                   clearcontroller();
 
                                                   setState(() {});
@@ -336,6 +341,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                             controller: descontroller,
                             decoration: InputDecoration(
+                                filled: true,
                                 label: Text("Description"),
                                 border: OutlineInputBorder(),
                                 fillColor: Colorsconstant.mygrey),
@@ -344,6 +350,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 20,
                           ),
                           TextFormField(
+                            readOnly: true,
                             validator: (value) {
                               if (datecontroller.text.isNotEmpty) {
                                 return null;
@@ -353,9 +360,25 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                             controller: datecontroller,
                             decoration: InputDecoration(
+                                suffixIcon: InkWell(
+                                    onTap: () async {
+                                      final DateTime? pickeddate =
+                                          await showDatePicker(
+                                              context: context,
+                                              firstDate: DateTime(2000),
+                                              lastDate: DateTime(2025));
+
+                                      if (pickeddate != null) {
+                                        String formated =
+                                            DateFormat("DD/MM/yyy")
+                                                .format(pickeddate);
+                                        datecontroller.text = formated;
+                                      }
+                                    },
+                                    child: Icon(Icons.calendar_month_outlined)),
                                 label: Text("Date"),
                                 border: OutlineInputBorder(),
-                                fillColor: Colorsconstant.mygrey),
+                                fillColor: Colorsconstant.mywhite),
                           ),
                           SizedBox(
                             height: 20,
@@ -475,10 +498,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void editedata(int index) {
     notescreenontrollerobj.notelist[index] = {
-      "titile": titilecontroller,
-      "des": descontroller,
-      "date": datecontroller,
-      "Colors": selectedcolorindex,
+      "titile": titilecontroller.text,
+      "des": descontroller.text,
+      "date": datecontroller.text,
+      "Colors": Notescreenontroller.selectedcolor,
     };
   }
 }
